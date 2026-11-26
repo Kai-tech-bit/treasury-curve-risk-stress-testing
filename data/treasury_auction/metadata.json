@@ -1,0 +1,10 @@
+{
+  "source": "US Treasury Fiscal Data \u2014 Treasury Securities Auctions",
+  "request_url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?fields=cusip%2Csecurity_type%2Csecurity_term%2Cauction_date%2Cissue_date%2Cdated_date%2Cmaturity_date%2Cfirst_int_payment_date%2Cint_rate%2Cprice_per100&filter=security_type%3Aeq%3ANote%2Csecurity_term%3Aeq%3A7-Year%2Cauction_date%3Agte%3A2025-01-01%2Cauction_date%3Alte%3A2025-12-31&sort=-auction_date%2Ccusip&page%5Bsize%5D=100",
+  "retrieved_at_utc": "2026-11-26T11:38:43.365733+00:00",
+  "price_basis": "Published auction price per $100, at issue settlement",
+  "curve_date": "2025-12-24",
+  "curve_time_basis": "ACT/365 fixed",
+  "coupon_schedule": "Regular semiannual scheduled dates; no business-day adjustment",
+  "limitation": "Same calendar date, not necessarily the same intraday timestamp"
+}
