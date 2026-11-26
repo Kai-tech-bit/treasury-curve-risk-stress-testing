@@ -13,6 +13,15 @@ A reproducible study that builds U.S. Treasury discount curves from FRED constan
 5. Compares each model with one published Treasury auction price.
 6. Stress-tests the portfolio by full repricing and reports how far first-order approximations are from it.
 
+## Start here
+
+- [Research notebook](notebooks/YIELD_CURVE_MODELLING_clean.ipynb)
+- [Key results](#key-results)
+- [Result tables](results/tables/) and [figures](results/figures/)
+- [Figure captions](results/figures/figure_index.csv)
+- [Raw and working data](data/) with its [manifest](data/manifest.json)
+- [Run metadata](results/export_metadata.json), [file inventory](results/inventory.csv) and [SHA-256 checksums](results/SHA256SUMS.txt)
+
 ## Methods
 
 ### Notation
@@ -124,15 +133,98 @@ Times are actual days divided by 365 from the auction date, using scheduled coup
 | Setting | Value |
 |---|---|
 | FRED window | 2015-01-01 to 2025-12-31 |
+| Complete 11-tenor curve dates | 2,750 |
 | Valuation date | 2019-12-31 |
 | Held-out tenors | 2Y, 7Y, 20Y |
 | Validation dates | 24 evenly spaced complete-curve dates |
+| Matched held-out trials | 72 (24 dates x 3 tenors) |
 | Portfolio | 2Y at 3.5%, 7Y at 4.0%, 20Y at 4.5%; USD 1,000,000 face each |
 | Default scenarios | Parallel +100 bp, Parallel -100 bp, Steepener (2Y -25 / 10Y +50), Flattener (2Y +50 / 10Y -25), Custom 20Y +75 bp |
+| Auction check | 7-year note, CUSIP 91282CPQ8, auction 2025-12-24, issue 2025-12-31 |
 
 The notebook is deterministic: there is no random simulation.
 
+## Key results
+
+The values below come from the saved CSVs in `results/tables/`. They describe this run only; the tables remain the source of truth.
+
+### Curve fit on the valuation date
+
+| Model | In-sample RMSE (bp) | Max abs error (bp) | Converged starts | Parameters on a bound |
+|---|---:|---:|---|---|
+| NS | 2.77 | 5.84 | 3/3 | None |
+| NSS | 1.16 | 2.74 | 6/6 | None |
+| Bootstrap | about 0 | about 0 | not applicable | not applicable |
+
+The bootstrap reprices its own inputs by construction, so its in-sample error is not evidence of quality. The 1Y1Y implied forward is 1.62% (NS), 1.57% (NSS) and 1.56% (bootstrap). Implied forwards are model outputs, not forecasts.
+
+[One-date fit summary](results/tables/one_date_fit_summary.csv) · [Forward summary](results/tables/forward_summary.csv)
+
+### Held-out validation
+
+72 matched trials, scored on identical cases for all three models:
+
+| Model | Bias (bp) | MAE (bp) | RMSE (bp) | 95th pct abs error (bp) |
+|---|---:|---:|---:|---:|
+| NS | -1.90 | 6.55 | 9.50 | 19.62 |
+| NSS | -2.90 | 6.60 | 9.69 | 19.99 |
+| Bootstrap | +1.09 | 7.03 | 9.65 | 19.83 |
+
+Held-out RMSE by tenor (bp):
+
+| Held-out tenor | NS | NSS | Bootstrap |
+|---|---:|---:|---:|
+| 2Y | 3.76 | 2.90 | 9.15 |
+| 7Y | 5.75 | 4.66 | 2.46 |
+| 20Y | 14.96 | 15.86 | 13.76 |
+
+The three models are close overall. NSS fits the quotes best in-sample, but that advantage does not appear out of sample. The bootstrap is weakest at 2Y and strongest at 7Y, and all three models are least accurate at the long end. The 72 trials come from correlated dates, so the sub-bp gaps between models should not be read as a ranking.
+
+[Overall](results/tables/held_out_overall.csv) · [By tenor](results/tables/held_out_by_tenor.csv) · [All trials](results/tables/held_out_trials.csv)
+
+### Portfolio value and key-rate risk (2019-12-31)
+
+| Model | Portfolio PV (USD) | Duration (years) | Parallel DV01 (USD/bp) |
+|---|---:|---:|---:|
+| NS | 3,551,182 | 8.11 | 2,881.62 |
+| NSS | 3,550,467 | 8.11 | 2,879.96 |
+| Bootstrap | 3,547,249 | 8.11 | 2,876.29 |
+
+The portfolio value differs by about 3,900 USD (0.11%) across models. Key-rate DV01 reconciles to parallel DV01 to within 0.001 USD/bp for every bond and model. By bond (NS curve), parallel DV01 is 202 USD/bp for the 2Y, 714 for the 7Y and 1,966 for the 20Y, so the 20Y bond carries about two thirds of the portfolio risk.
+
+[Parallel risk](results/tables/bond_parallel_risk.csv) · [Key-rate risk](results/tables/bond_key_rate_risk.csv) · [Base valuations](results/tables/base_bond_valuations.csv)
+
+### Stress testing (NS curve)
+
+Estimate minus full repricing, in USD:
+
+| Scenario | Full-repricing P&L | Key-rate error | Duration + convexity error |
+|---|---:|---:|---:|
+| Parallel +100 bp | -269,454 (-7.59%) | -18,708 | +1,073 |
+| Parallel -100 bp | +309,120 (+8.70%) | -20,958 | -1,177 |
+| Steepener (2Y -25 / 10Y +50) | -96,301 (-2.71%) | -4,191 | not applicable |
+| Flattener (2Y +50 / 10Y -25) | +29,588 (+0.83%) | -1,136 | not applicable |
+| Custom 20Y +75 bp | -107,858 (-3.04%) | -7,717 | not applicable |
+
+The key-rate estimate is first-order, so it overstates losses and understates gains: its error is about 7% of full-repricing P&L for the parallel and 20Y shocks, and 4% for the two twists. Adding convexity reduces the parallel error to about 0.4%. The other two curves give almost the same numbers; the full set is in the CSVs.
+
+[Stress summary](results/tables/portfolio_stress_summary.csv) · [By bond](results/tables/stress_by_bond_and_portfolio.csv) · [Scenario shocks](results/tables/scenario_shocks_bp.csv)
+
+### Treasury auction check
+
+| Model | Model price per 100 | Auction price per 100 | Model minus auction |
+|---|---:|---:|---:|
+| NS | 99.7227 | 99.6663 | +0.0565 |
+| NSS | 99.7667 | 99.6663 | +0.1005 |
+| Bootstrap | 99.7490 | 99.6663 | +0.0827 |
+
+All three models price the note 5 to 10 cents per 100 above its published auction price. This is one auction on one date, so it is a sanity check and not a validation sample. The curve is matched by calendar date, not timestamp.
+
+[Price comparison](results/tables/price_comparison.csv) · [Cash flows](results/tables/cashflows.csv)
+
 ## Figures
+
+![FRED yield history](results/figures/01_fred_yield_history.png)
 
 ![Quote fit and residuals](results/figures/02_quote_fit_and_residuals.png)
 
@@ -142,15 +234,17 @@ The notebook is deterministic: there is no random simulation.
 
 ![Portfolio key-rate DV01](results/figures/05_portfolio_key_rate_dv01.png)
 
+![Treasury auction price check](results/figures/06_treasury_auction_price_check.png)
+
 ![Stress curve shapes](results/figures/07_stress_curve_shapes.png)
 
 ![Stress P&L and approximation error](results/figures/08_stress_pnl_and_approximation_error.png)
 
-Figure 07 shades where the shocked curve lies above (red) or below (blue) the base curve. The shading is the scenario difference, not a confidence band. Figures 01 (FRED history) and 06 (auction check) are in the same folder.
+Figure 07 shades where the shocked curve lies above (red) or below (blue) the base curve. The shading is the scenario difference, not a confidence band. Each figure is saved as PNG and as vector PDF in the same folder.
 
 ## Results tables
 
-All numbers are in `results/tables/`; the README does not duplicate them so the tables remain the single source of truth.
+All numbers are in `results/tables/`.
 
 | Topic | Files |
 |---|---|
@@ -172,12 +266,25 @@ All numbers are in `results/tables/`; the README does not duplicate them so the 
 ## Repository layout
 
 ```text
-notebooks/   Clean Colab/Jupyter notebook (run top to bottom)
-data/        FRED raw files, manifest with hashes, working yield panels, auction evidence
-results/
-  tables/    Every computed CSV
-  figures/   Report figures
-report/      Reserved for the written report
+.
+├── README.md
+├── requirements.txt
+├── notebooks/
+│   └── YIELD_CURVE_MODELLING_clean.ipynb
+├── data/
+│   ├── manifest.json
+│   ├── tenor_coverage.csv
+│   ├── yields_percent.csv
+│   ├── yields_decimal.csv
+│   ├── raw/                  (eleven FRED series)
+│   └── treasury_auction/     (raw API response and metadata)
+├── results/
+│   ├── tables/               (computed CSVs)
+│   ├── figures/              (PNG, PDF and figure_index.csv)
+│   ├── export_metadata.json
+│   ├── inventory.csv
+│   └── SHA256SUMS.txt
+└── report/                   (reserved for the written report)
 ```
 
 ## Reproducing
@@ -186,7 +293,9 @@ report/      Reserved for the written report
 2. Adjust the configuration cell if needed and run all cells in order. Internet access is required for FRED and the Treasury Fiscal Data API.
 3. Section 5 builds the figure and export bundle. The interactive stress playground in Section 4 needs a live session and does not render on GitHub.
 
-Data retrieved at run time is stored with a manifest of URLs, timestamps, and SHA-256 hashes. A matching hash shows file integrity, not financial correctness.
+The saved run used Python 3.13.18, NumPy 2.4.6, pandas 2.2.3, SciPy 1.16.3, Matplotlib 3.10.0 and requests 2.32.4 (see `results/export_metadata.json`). These are recorded versions, not a tested compatibility range.
+
+Data retrieved at run time is stored with a manifest of URLs, timestamps, and SHA-256 hashes. The inventory and checksum files in `results/` support integrity checks after transfer. A matching hash shows file integrity, not financial correctness.
 
 ## References
 
