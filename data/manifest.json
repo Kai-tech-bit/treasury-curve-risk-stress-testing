@@ -1,0 +1,128 @@
+{
+  "source": "FRED / Federal Reserve Board H.15",
+  "requested_start": "2015-01-01",
+  "requested_end": "2025-12-31",
+  "source_units": "percent",
+  "working_units": "decimal annual yield",
+  "transformation": "percent / 100; no imputation",
+  "core_series_ids": [
+    "DGS1MO",
+    "DGS3MO",
+    "DGS6MO",
+    "DGS1",
+    "DGS2",
+    "DGS3",
+    "DGS5",
+    "DGS7",
+    "DGS10",
+    "DGS20",
+    "DGS30"
+  ],
+  "counts": {
+    "panel_rows": 2869,
+    "all_empty_rows": 119,
+    "complete_core_dates": 2750,
+    "complete_full_dates": 2750
+  },
+  "downloads": [
+    {
+      "series_id": "DGS1MO",
+      "maturity_years": 0.08333333333333333,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1MO&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1MO&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:17.462509+00:00",
+      "raw_file": "raw/DGS1MO.csv",
+      "sha256": "73db94ff01408be9af37b506f81e55a018fbcf8de2471319c72b691af48952bf"
+    },
+    {
+      "series_id": "DGS3MO",
+      "maturity_years": 0.25,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:18.110568+00:00",
+      "raw_file": "raw/DGS3MO.csv",
+      "sha256": "fc0c85d1d5b730bbd0c70bdd5a913212e61b0bf2f9b56c6aefcf02eedff13cb0"
+    },
+    {
+      "series_id": "DGS6MO",
+      "maturity_years": 0.5,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS6MO&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS6MO&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:18.914583+00:00",
+      "raw_file": "raw/DGS6MO.csv",
+      "sha256": "34165210b866c4b59d43051f32e7272f5e2dbcfa42f207421ab3d9e4ea9b5452"
+    },
+    {
+      "series_id": "DGS1",
+      "maturity_years": 1.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:19.750163+00:00",
+      "raw_file": "raw/DGS1.csv",
+      "sha256": "e98d9d97f041cbed921f955df813f0980cf4776c7c56dbf5fef46c6f87f655b8"
+    },
+    {
+      "series_id": "DGS2",
+      "maturity_years": 2.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:20.633825+00:00",
+      "raw_file": "raw/DGS2.csv",
+      "sha256": "61edc71fce8934dbc85901720d28463159c86d2c1eb3ab7c4a439b715ee861e0"
+    },
+    {
+      "series_id": "DGS3",
+      "maturity_years": 3.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:21.471923+00:00",
+      "raw_file": "raw/DGS3.csv",
+      "sha256": "9dd2d2c4107cada8f3068659f8027c0db9f4a16894e66ee1af483d13d25d5efa"
+    },
+    {
+      "series_id": "DGS5",
+      "maturity_years": 5.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS5&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS5&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:22.378311+00:00",
+      "raw_file": "raw/DGS5.csv",
+      "sha256": "f65ba8774b25c4dd8056ec24a0663e8e1901cd3fd0cceb6a574bc0dec7a3b983"
+    },
+    {
+      "series_id": "DGS7",
+      "maturity_years": 7.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS7&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS7&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:23.186495+00:00",
+      "raw_file": "raw/DGS7.csv",
+      "sha256": "29f4a490950dd9e18d4af1a39dacfebd05833eb1f654a4c6a66162371be8bce0"
+    },
+    {
+      "series_id": "DGS10",
+      "maturity_years": 10.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:23.812031+00:00",
+      "raw_file": "raw/DGS10.csv",
+      "sha256": "c6859a35c3fd817c9b882f6098726d9485b569b065855350ead9240d1203ccc5"
+    },
+    {
+      "series_id": "DGS20",
+      "maturity_years": 20.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS20&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS20&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:24.459813+00:00",
+      "raw_file": "raw/DGS20.csv",
+      "sha256": "ec1db69cf2738d05fa3da9c1de0bf1d1550e08b3457a9458307b32c51d9533a8"
+    },
+    {
+      "series_id": "DGS30",
+      "maturity_years": 30.0,
+      "requested_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS30&cosd=2015-01-01&coed=2025-12-31",
+      "response_url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS30&cosd=2015-01-01&coed=2025-12-31",
+      "retrieved_at_utc": "2026-11-26T11:37:25.057742+00:00",
+      "raw_file": "raw/DGS30.csv",
+      "sha256": "05d2b2d21dad0e36cb271877841ff4c31090539376100210c91295f05c09ebab"
+    }
+  ]
+}
