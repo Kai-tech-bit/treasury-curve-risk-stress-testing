@@ -1,0 +1,23 @@
+{
+  "exported_at_utc": "2026-11-26T11:38:54.523733+00:00",
+  "source_snapshot": "2015-01-01_to_2025-12-31_20261126T113716479286Z",
+  "curve_date": "2019-12-31",
+  "stress_shape_figure_model": "NS",
+  "models": [
+    "NS",
+    "NSS",
+    "Bootstrap"
+  ],
+  "complete_curve_dates": 2750,
+  "matched_holdout_trials": 72,
+  "auction_cusip": "91282CPQ8",
+  "auction_date": "2025-12-24",
+  "python": "3.13.18",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "scipy": "1.16.3",
+    "matplotlib": "3.10.0",
+    "requests": "2.32.4"
+  }
+}

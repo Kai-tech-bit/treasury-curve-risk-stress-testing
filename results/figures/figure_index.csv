@@ -1,0 +1,9 @@
+stem,caption
+01_fred_yield_history,Selected FRED constant-maturity series. Missing quotes are not imputed.
+02_quote_fit_and_residuals,"Fitted and observed quotes at the calibration tenors. Bars are signed residuals, not confidence intervals."
+03_zero_and_forward_curves,Zero rates are continuously compounded (CC). Bootstrap instantaneous forwards are shown as steps. Implied forwards are not forecasts.
+04_held_out_errors,"Matched held-out errors across 72 date–tenor trials. Lines connect sampled dates, not daily observations."
+05_portfolio_key_rate_dv01,Positive exposure denotes an approximate dollar loss for a 1 bp upward bump at the selected anchor.
+06_treasury_auction_price_check,"Published auction price: 99.666257 per $100 face. Prices are compared at issue settlement; this is one auction, not a secondary-market validation sample."
+07_stress_curve_shapes,All panels share a vertical scale. Red and blue shading show where the shocked zero curve is above or below the base curve; they are not confidence bands. P&L is full repricing.
+08_stress_pnl_and_approximation_error,Full-repricing P&L and signed key-rate approximation error for the same synthetic portfolio. Parallel duration-plus-convexity results are in the stress CSV.
